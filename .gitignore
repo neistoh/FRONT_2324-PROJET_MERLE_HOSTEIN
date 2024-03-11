@@ -13,9 +13,9 @@
 /bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
+frontend/isenconnect/node_modules
+frontend/isenconnect/npm-debug.log
+frontend/isenconnect/yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -27,22 +27,22 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+frontend/isenconnect/.vscode/*
+frontend/isenconnect/!.vscode/settings.json
+frontend/isenconnect/!.vscode/tasks.json
+frontend/isenconnect/!.vscode/launch.json
+frontend/isenconnect/!.vscode/extensions.json
+frontend/isenconnect/.history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+frontend/isenconnect/.angular/cache
+frontend/isenconnect/.sass-cache/
+frontend/isenconnect/connect.lock
+frontend/isenconnect/coverage
+frontend/isenconnect/libpeerconnection.log
+frontend/isenconnect/testem.log
+frontend/isenconnect/typings
 
 # System files
-.DS_Store
-Thumbs.db
+frontend/isenconnect/.DS_Store
+frontend/isenconnect/Thumbs.db
