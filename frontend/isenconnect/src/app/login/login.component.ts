@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatCommonModule } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { SharedConstantes } from 'src/shared/shared-constantes.constantes';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,33 +14,17 @@ export class LoginComponent implements OnInit {
   pseudo = new FormControl('');
   password = new FormControl('');
 
+  constructor(
+    private readonly router: Router,
+    private readonly loginServicePipe: LoginService
+  ){}
+
   ngOnInit(): void {
   }
 
   isUserAllowed(): void{
-    console.log(this.pseudo.value);
-    console.log(this.password.value);
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user', {
-      method: 'POST',
-      headers: {
-          "Content-type": "application/json"
-      },
-      body: JSON.stringify({
-        pseudo: this.pseudo.value,
-        password: this.password.value 
-      })
-    })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      if(data["droits"] === "W"){
-        console.log("A le droits de ce connecter");
-      }
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+    console.log('On passe dans isUserAllowed');
+    this.loginServicePipe.connect(this.pseudo.value,this.password.value,'acceuil');
   }
 
 }
