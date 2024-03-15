@@ -1,0 +1,13 @@
+.loginDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5em;
+}
+
+.loginForm {
+    height: 20em;
+    width: 20em;
+    align-items: center;
+    justify-content: center;
+}

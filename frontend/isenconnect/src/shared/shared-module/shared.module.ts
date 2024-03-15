@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from 'src/app/login/login.component';
 import { LoginModule } from 'src/app/login/login.module';
 import { NavigationPanelModule } from '../navigation-panel/navigation-panel.module';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -12,11 +11,13 @@ import { NavigationPanelModule } from '../navigation-panel/navigation-panel.modu
   imports: [
     CommonModule,
     LoginModule,
-    NavigationPanelModule
+    NavigationPanelModule,
+    MatFormFieldModule
   ],
   exports: [
     LoginModule,
-    NavigationPanelModule
+    NavigationPanelModule,
+    MatFormFieldModule
   ]
 })
 export class SharedModule { }
