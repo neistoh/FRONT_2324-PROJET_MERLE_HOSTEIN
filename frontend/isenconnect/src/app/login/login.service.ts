@@ -7,7 +7,6 @@ import { SharedConstantes } from 'src/shared/shared-constantes.constantes';
   providedIn: 'root'
 })
 export class LoginService {
-
   constructor(
     private readonly router: Router
   ) { }

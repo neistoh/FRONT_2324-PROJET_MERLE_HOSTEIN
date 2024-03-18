@@ -1,0 +1,51 @@
+body {
+    overflow-y: hidden;
+}
+
+.title {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    text-align: center;
+    font-size: 3.5em;
+}
+
+.even-list {
+    vertical-align: middle;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.event {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 30em;
+    max-height: 50em;
+    margin-right: 2em;
+    margin-top: 2em;
+    margin-bottom: 0.1em;
+}
+
+.image-event {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    width: 100%;
+}
+
+.cover-image {
+    background-size: cover;
+}
+
+.event-text {
+    white-space: normal;
+}
+
+.buttonRight {
+    float: right;
+    bottom: 21em;
+    margin-right: 2em;
+}
+
+.buttonLeft {
+    bottom: 21em;
+    margin-left: 2em;
+}
