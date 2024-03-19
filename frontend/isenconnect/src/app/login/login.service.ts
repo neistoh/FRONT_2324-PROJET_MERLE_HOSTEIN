@@ -14,7 +14,7 @@ export class LoginService {
   connect(pseudo: string | null, password: string | null, route: string){
     let jwtSign;
     sessionStorage.getItem('jwt')? jwtSign=sessionStorage.getItem('jwt') : jwtSign=''; 
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user', {
+    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user/connect', {
       method: 'POST',
       headers: {
           "Content-type": "application/json"
@@ -25,15 +25,24 @@ export class LoginService {
         jwt: jwtSign
       })
     })
-    .then(response => response.json())
+    .then(response => { 
+      if(response.status===401){
+        this.router.navigateByUrl('');
+      }else if(response.status === 404){
+        this.router.navigateByUrl('');
+      }
+      return response.json()})
     .then(data => {
       if(data['jwt'] === sessionStorage.getItem('jwt') && data['droits'] === 'W'){
-        console.log('là');
         this.router.navigateByUrl(route);
       }else if(data['droits'] === 'W'){
-        console.log("ici");
         sessionStorage.setItem('jwt',data['jwt']);
         this.router.navigateByUrl(route);
+      }else if(data["error"]){
+        console.log(data["error"]);
+        if(data["action"] === "removeJwt"){
+          sessionStorage.removeItem('jwt');
+        }
       }
     })
     .catch(function(error) {

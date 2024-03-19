@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   password = new FormControl('');
 
   constructor(
-    private readonly router: Router,
     private readonly loginServicePipe: LoginService
   ){}
 
   ngOnInit(): void {
+    this.loginServicePipe.connect('','','acceuil');
   }
 
   isUserAllowed(): void{

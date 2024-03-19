@@ -22,6 +22,5 @@ export class appRoutingGuard{
     }
 
     this.loginServicePipe.connect('','',route.url[0].toString());
-    return;
   };
 }

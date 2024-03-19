@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../model/user.model';
+import { EventService } from '../event/event.service';
 
 @Component({
   selector: 'app-acceuil',
@@ -11,13 +12,20 @@ export class AcceuilComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(){
+  constructor(
+    private readonly eventServicePipe: EventService
+  ){
     this.user.username = 'Test';
   }
   
 
   ngOnInit(): void {
-    
+    const filtre = {
+      "theme": "music",
+      "price": 10
+    }
+    console.log("Appel de servicePipe");
+    this.eventServicePipe.getEventByFiltre(filtre);
   }
 
   scrollEventRight(){
