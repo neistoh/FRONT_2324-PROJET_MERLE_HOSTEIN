@@ -34,13 +34,14 @@ export class LoginService {
       return response.json()})
     .then(data => {
       if(data['jwt'] === sessionStorage.getItem('jwt') && data['droits'] === 'W'){
+        sessionStorage.setItem('nickname',data['nickname'])
         this.router.navigateByUrl(route);
       }else if(data['droits'] === 'W'){
         sessionStorage.setItem('jwt',data['jwt']);
         this.router.navigateByUrl(route);
-      }else if(data["error"]){
-        console.log(data["error"]);
-        if(data["action"] === "removeJwt"){
+      }else if(data['error']){
+        console.log(data['error']);
+        if(data['action'] === 'removeJwt'){
           sessionStorage.removeItem('jwt');
         }
       }

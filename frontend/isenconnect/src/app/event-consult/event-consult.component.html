@@ -1,0 +1,21 @@
+<mat-card class="card">
+<div *ngIf="event$ | async as event">
+    <div>
+        <h1 class="title">{{event.name}}</h1>
+        <button mat-fab color="accent" class="buttonFavorit">
+            <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-fab color="primary" class="buttonModification">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+    <div class="secondRow">
+        <img class="image-event" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <div class="secondRowSecondCol">
+            <h2 class="price">Prix de l'évenement : {{event.price}}€</h2>
+            <h2 class="date">Date de l'évenement : {{event.date | date:"dd/MM/YY"}}</h2>
+            <h2 class="theme">Thème de l'évenement : {{event.theme}}</h2>
+        </div>
+    </div>
+</div>
+</mat-card>

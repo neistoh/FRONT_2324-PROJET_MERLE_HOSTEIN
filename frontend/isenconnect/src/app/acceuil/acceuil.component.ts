@@ -1,6 +1,10 @@
 import {Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '../model/user.model';
+import { UserModel } from '../model/user.model';
 import { EventService } from '../event/event.service';
+import { Observable, Observer, Subscription, tap } from 'rxjs';
+import { EventModel } from '../model/event.model';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-acceuil',
@@ -8,24 +12,73 @@ import { EventService } from '../event/event.service';
   styleUrls: ['./acceuil.component.css']
 })
 export class AcceuilComponent implements OnInit, OnDestroy {
-  user: User = new User();
+  user: UserModel = new UserModel('','','','',new Date(),'');
 
+  souscriptionMere: Subscription = new Subscription();
+  event$: Observable<EventModel[]> = new Observable<EventModel[]>;
+
+
+  nameForm = new FormControl('');
+  optionThemeForm = new FormControl('');
+  prixForm = new FormControl('');
+  greaterLesserForm = new FormControl('');
+  greaterLesserOption = 'Inférieur à'
 
 
   constructor(
-    private readonly eventServicePipe: EventService
+    private readonly eventServicePipe: EventService,
+    private readonly router: Router
   ){
-    this.user.username = 'Test';
+    this.user.nickname = sessionStorage.getItem('nickname')!;
   }
   
 
   ngOnInit(): void {
-    const filtre = {
-      "theme": "music",
-      "price": 10
+    const filtre = {}
+    this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
+      this.eventServicePipe.getEventByFiltre(observer,filtre);
+    });
+    
+    this.souscriptionMere.add(this.greaterLesserForm.valueChanges.pipe(tap(value=>{
+      value?this.greaterLesserOption='Supérieur à':this.greaterLesserOption='Inférieur à';
+    })).subscribe());
+    
+  }
+
+
+  filtre(){
+    let price = 0;
+    if(this.greaterLesserForm.value && this.prixForm.value){
+      price = +this.prixForm.value;
+    }else if(this.prixForm.value){
+      price = -this.prixForm.value;
     }
-    console.log("Appel de servicePipe");
-    this.eventServicePipe.getEventByFiltre(filtre);
+    console.log(this.greaterLesserForm.value);
+    console.log(price);
+    const filtre = {
+      name: this.nameForm.value,
+      theme: this.optionThemeForm.value,
+      price: price
+    }
+    this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
+      this.eventServicePipe.getEventByFiltre(observer,filtre);
+    })
+  }
+
+  resetFiltre(){
+    const filtre = {
+      theme: '',
+      price: 0,
+      date: ''
+    }
+    this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
+      this.eventServicePipe.getEventByFiltre(observer,filtre);
+    })
+
+    this.optionThemeForm.setValue('');
+    this.nameForm.setValue('');
+    this.prixForm.setValue('0');
+    this.greaterLesserForm.setValue('');
   }
 
   scrollEventRight(){
@@ -48,7 +101,11 @@ export class AcceuilComponent implements OnInit, OnDestroy {
   }
 
 
+  checkDetailEvent(id:number){
+    this.router.navigateByUrl('eventConsult/'+id);
+  }
+
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.souscriptionMere.unsubscribe();
   }
 }

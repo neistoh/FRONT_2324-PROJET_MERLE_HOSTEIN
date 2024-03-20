@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginModule } from 'src/app/login/login.module';
 import { NavigationPanelModule } from '../navigation-panel/navigation-panel.module';
 import { AcceuilModule } from 'src/app/acceuil/acceuil.module';
+import { EventConsultModule } from 'src/app/event-consult/event-consult.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { AcceuilModule } from 'src/app/acceuil/acceuil.module';
     CommonModule,
     LoginModule,
     NavigationPanelModule,
-    AcceuilModule
+    AcceuilModule,
+    EventConsultModule
   ],
   exports: [
     LoginModule,
