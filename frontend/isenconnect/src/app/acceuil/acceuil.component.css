@@ -49,3 +49,16 @@ body {
     bottom: 21em;
     margin-left: 2em;
 }
+
+.triFiltre {
+    display: inline-block;
+}
+
+.tri1{
+    display: inline-block;
+    margin-right: 1.2em;
+}
+
+.tri2{
+    display: inline-block;
+}

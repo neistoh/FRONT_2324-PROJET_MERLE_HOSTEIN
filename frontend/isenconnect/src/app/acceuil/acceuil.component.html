@@ -1,6 +1,6 @@
 <h1 class="title">Bonjour {{this.user.nickname}}</h1>
 
-<div>
+<div class="triFiltre">
     <h2>Filtre</h2>
     <mat-form-field>
         <mat-label>Nom</mat-label>
@@ -23,6 +23,21 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="filtre()">Filtrer</button>
     <button mat-raised-button color="primary" (click)="resetFiltre()">Reset</button>
+
+    <h2>Tri</h2>
+    <div class="tri1">
+        <h3>Date: </h3>
+        <mat-label> Décroissant </mat-label>
+        <mat-slide-toggle [formControl]="triDateForm"></mat-slide-toggle>
+        <mat-label> Croissant </mat-label>
+    </div>
+    <div class="tri2">
+        <h3>Prix: </h3>
+        <mat-label> Décroissant </mat-label>
+        <mat-slide-toggle [formControl]="triPrixForm"></mat-slide-toggle>
+        <mat-label> Croissant </mat-label>
+    </div>
+    
 </div>
 
 <div class="even-list" id="scrollContainer">

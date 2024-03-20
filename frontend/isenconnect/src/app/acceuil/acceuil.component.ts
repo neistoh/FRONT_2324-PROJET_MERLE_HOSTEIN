@@ -22,6 +22,10 @@ export class AcceuilComponent implements OnInit, OnDestroy {
   optionThemeForm = new FormControl('');
   prixForm = new FormControl('');
   greaterLesserForm = new FormControl('');
+
+  triDateForm = new FormControl('');
+  triPrixForm = new FormControl('');
+
   greaterLesserOption = 'Inférieur à'
 
 
@@ -43,6 +47,16 @@ export class AcceuilComponent implements OnInit, OnDestroy {
       value?this.greaterLesserOption='Supérieur à':this.greaterLesserOption='Inférieur à';
     })).subscribe());
     
+
+    this.souscriptionMere.add(this.triDateForm.valueChanges.pipe(tap(value=>{
+      let ordre = this.triDateForm.value?1:-1;
+      this.filtreWithTri("date", ordre.toString());
+    })).subscribe());
+
+    this.souscriptionMere.add(this.triPrixForm.valueChanges.pipe(tap(value=>{
+      let ordre = this.triPrixForm.value?1:-1;
+      this.filtreWithTri("prix", ordre.toString());
+    })).subscribe());
   }
 
 
@@ -59,6 +73,25 @@ export class AcceuilComponent implements OnInit, OnDestroy {
       name: this.nameForm.value,
       theme: this.optionThemeForm.value,
       price: price
+    }
+    this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
+      this.eventServicePipe.getEventByFiltre(observer,filtre);
+    })
+  }
+
+  filtreWithTri(tri: string,ordre: string){
+    let price = 0;
+    if(this.greaterLesserForm.value && this.prixForm.value){
+      price = +this.prixForm.value;
+    }else if(this.prixForm.value){
+      price = -this.prixForm.value;
+    }
+    const filtre = {
+      name: this.nameForm.value,
+      theme: this.optionThemeForm.value,
+      price: price,
+      tri: tri,
+      ordre: ordre
     }
     this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
       this.eventServicePipe.getEventByFiltre(observer,filtre);

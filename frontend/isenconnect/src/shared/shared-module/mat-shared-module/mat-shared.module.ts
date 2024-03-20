@@ -11,6 +11,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 import {MatIconModule} from '@angular/material/icon'; 
+import {MatListModule} from '@angular/material/list'; 
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   exports: [
     MatCommonModule,
@@ -45,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ]
 })
 export class MatSharedModule { }

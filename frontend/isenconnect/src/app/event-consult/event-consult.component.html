@@ -1,21 +1,59 @@
 <mat-card class="card">
 <div *ngIf="event$ | async as event">
     <div>
-        <h1 class="title">{{event.name}}</h1>
-        <button mat-fab color="accent" class="buttonFavorit">
+        <h1 class="title" *ngIf="!isInModification">{{event.name}}</h1>
+        <mat-form-field *ngIf="isInModification" class="title">
+            <mat-label>Nom évenement</mat-label>
+            <input matInput type="text" [formControl]="nameForm" placeholder="{{event.name}}">
+        </mat-form-field>
+        <button mat-fab color="accent" class="buttonFavorit" *ngIf="!isInModification" (click)="addToFavorites()">
             <mat-icon>favorite</mat-icon>
         </button>
-        <button mat-fab color="primary" class="buttonModification">
-            <mat-icon>edit</mat-icon>
-        </button>
+        <div *ngIf="isOwner$ | async as isOwner" class="buttonModification">
+            <button mat-fab color="primary" (click)="modification()">
+                <mat-icon>{{saveIcone}}</mat-icon>
+            </button>
+        </div>
     </div>
     <div class="secondRow">
         <img class="image-event" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
         <div class="secondRowSecondCol">
-            <h2 class="price">Prix de l'évenement : {{event.price}}€</h2>
-            <h2 class="date">Date de l'évenement : {{event.date | date:"dd/MM/YY"}}</h2>
-            <h2 class="theme">Thème de l'évenement : {{event.theme}}</h2>
+            <h2 class="price" *ngIf="!isInModification">Prix de l'évenement : {{event.price}}€</h2>
+            <mat-form-field *ngIf="isInModification" class="price">
+                <mat-label>Prix évenement</mat-label>
+                <input matInput type="number" [formControl]="priceForm" placeholder="{{event.price}}€">
+            </mat-form-field>
+
+            <h2 class="date" *ngIf="!isInModification">Date de l'évenement : {{event.date | date:"dd/MM/YY"}}</h2>
+            <mat-form-field class="date" *ngIf="isInModification">
+                <mat-label>Custom calendar header</mat-label>
+                <input matInput [matDatepicker]="picker" [formControl]="dateForm">
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <h2 class="theme" *ngIf="!isInModification">Thème de l'évenement : {{event.theme}}</h2>
+            <mat-form-field class="theme" *ngIf="isInModification">
+                <mat-label>Theme</mat-label>
+                <mat-select [formControl]="optionThemeForm">
+                    <mat-option value="sport">Sport</mat-option>
+                    <mat-option value="culture">Culture</mat-option>
+                    <mat-option value="festif">Festif</mat-option>
+                    <mat-option value="pro">Pro</mat-option>
+                    <mat-option value="autre">Autres</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
+
+        <mat-card class="listFavoris" *ngIf="!isInModification">
+            <h3>User qui ont aimé cet évenement :</h3>
+            <mat-list role="list" *ngFor="let userFavoris of listUserFavoris$ | async; let i=index">
+                <mat-list-item>
+                    <span matListItemTitle>{{userFavoris.nickname}}</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
     </div>
 </div>
 </mat-card>
