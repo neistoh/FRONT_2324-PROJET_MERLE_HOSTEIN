@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<div class="loginDiv">
+<div class="loginDiv" *ngIf="!isRegistering">
   <mat-card class="loginForm">
     <h1>Login</h1>
+
     <mat-form-field>
       <mat-label>Pseudo</mat-label>
       <input matInput [formControl]="pseudo">
@@ -11,9 +12,54 @@
       <mat-label>Password</mat-label>
       <input matInput type="password" [formControl]="password"/>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="isUserAllowed()">Login</button>
+
+    <button mat-raised-button color="primary" (click)="isUserAllowed()" >Login</button>
+    <button mat-raised-button color="primary" (click)="register()">Register</button>
+    
   </mat-card>
 </div>
 
+<div class="registerDiv" *ngIf="isRegistering">
+  <mat-card class="registerForm">
+    <h1>Créer compte</h1>
 
+    <mat-form-field >
+      <mat-label>Pseudo</mat-label>
+      <input matInput [formControl]="pseudo">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControl]="password"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput [formControl]="nameForm">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Prénom</mat-label>
+      <input matInput [formControl]="firstnameForm"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Mail</mat-label>
+      <input matInput [formControl]="mailForm">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Birthdate</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]="birthdateForm">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Avatar</mat-label>
+      <mat-select [formControl]="avatarForm">
+        <mat-option value="sport">Nami</mat-option>
+        <mat-option value="culture">Placeholder</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="register()">Annulé</button>
+    <button mat-raised-button color="primary" (click)="addUser()">Créer</button>
+  </mat-card>
+</div>
 

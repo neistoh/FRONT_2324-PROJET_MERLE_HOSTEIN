@@ -33,7 +33,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     private readonly eventServicePipe: EventService,
     private readonly router: Router
   ){
-    this.user.nickname = sessionStorage.getItem('nickname')!;
+    this.user.nickname = JSON.parse(atob(sessionStorage.getItem('jwt')!.split('.')[1]))['username'];
   }
   
 

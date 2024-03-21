@@ -11,3 +11,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.registerDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5em;
+}
+
+.registeerForm {
+    height: 60em;
+    width: 20em;
+    padding: 2em;
+    align-items: center;
+    justify-content: center;
+}
