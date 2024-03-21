@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.chatService.getChatHistory().subscribe(data => {
+    this.chatService.getChatHistory().subscribe((data: string[]) => {
       this.messages = data;
     });
 
