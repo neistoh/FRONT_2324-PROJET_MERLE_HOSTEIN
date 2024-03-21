@@ -6,6 +6,7 @@ import { AcceuilModule } from 'src/app/acceuil/acceuil.module';
 import { EventConsultModule } from 'src/app/event-consult/event-consult.module';
 import { AccountModule } from 'src/app/account/account.module';
 import { ChatModule } from 'src/app/chat/chat.module';
+import { ConversationModule } from 'src/app/conversation/conversation.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ChatModule } from 'src/app/chat/chat.module';
     AcceuilModule,
     EventConsultModule,
     ChatModule,
-    AccountModule
+    AccountModule,
+    ConversationModule
   ],
   exports: [
     LoginModule,

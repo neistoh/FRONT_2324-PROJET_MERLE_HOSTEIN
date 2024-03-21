@@ -1,0 +1,17 @@
+<h1 class="title">Bonjour {{this.user.nickname}}</h1>
+
+
+<div class="even-list" id="scrollContainer">
+    <ng-container *ngFor="let convo of conversation$ |async; let i=index;">
+        <mat-card class="event" id="event">
+            <mat-card-header>
+                <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="cover-image">
+                <mat-card-content>{{convo.name}}</mat-card-content>
+            </mat-card-header>
+            <img class="image-event" src="../../assets/images/event/{{convo.image}}.png" alt="Photo of a Shiba Inu">
+            <mat-card-actions>
+                <button mat-button (click)="gotToConvo(convo._id)">DETAILS</button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
+</div>
