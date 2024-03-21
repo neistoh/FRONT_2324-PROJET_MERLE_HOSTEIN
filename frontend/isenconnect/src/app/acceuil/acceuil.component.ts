@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./acceuil.component.css']
 })
 export class AcceuilComponent implements OnInit, OnDestroy {
-  user: UserModel = new UserModel('','','','',new Date(),'');
+  user: UserModel = new UserModel('','','','',new Date(),'','');
 
   souscriptionMere: Subscription = new Subscription();
   event$: Observable<EventModel[]> = new Observable<EventModel[]>;

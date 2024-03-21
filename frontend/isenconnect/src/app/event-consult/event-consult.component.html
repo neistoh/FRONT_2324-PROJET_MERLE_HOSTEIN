@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="secondRow">
-        <img class="image-event" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img class="image-event" src='../../assets/images/event/{{event.theme}}.png' alt="Photo of a Shiba Inu">
         <div class="secondRowSecondCol">
             <h2 class="price" *ngIf="!isInModification">Prix de l'évenement : {{event.price}}€</h2>
             <mat-form-field *ngIf="isInModification" class="price">
