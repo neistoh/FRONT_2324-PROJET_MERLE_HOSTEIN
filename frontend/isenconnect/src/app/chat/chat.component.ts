@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -7,14 +8,34 @@ import { ChatService } from './chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-
-  constructor(
-    private readonly chatServicePipe: ChatService
-  ){}
-
+  message = new FormControl('');
   
+  messages: string[] = [];
+
+  constructor(private chatService: ChatService) { }
+
+  sendMessage(): void {
+    if(this.message.value !== '') {
+      this.chatService.sendMessage(this.message.value!);
+      this.message.setValue('');
+    }
+  }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.chatService.getChatHistory().subscribe(data => {
+      this.messages = data;
+    });
+
+    this.chatService.receiveMessage().subscribe(data => {
+      this.messages.push(data);
+    });
+
+    this.chatService.sendMessage(JSON.stringify({
+      text: "Test",
+      chat: "1",
+      user: "test",
+      sentAt: new Date()
+    }))
   }
 
   ngOnDestroy(): void {

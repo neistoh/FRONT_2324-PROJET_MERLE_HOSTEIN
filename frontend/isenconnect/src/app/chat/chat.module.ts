@@ -12,6 +12,9 @@ import { MatSharedModule } from 'src/shared/shared-module/mat-shared-module/mat-
   imports: [
     CommonModule,
     MatSharedModule
+  ],
+  exports: [
+    ChatComponent
   ]
 })
 export class ChatModule { }

@@ -1,1 +1,8 @@
-<p>chat works!</p>
+<div *ngFor="let msg of messages">
+    {{ msg }}
+</div>
+<mat-form-field>
+    <mat-label>Message</mat-label>
+    <input matInput type="text" (keyup.enter)="sendMessage()" [formControl] = "message">
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="sendMessage()">Send</button>

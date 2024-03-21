@@ -4,6 +4,7 @@ import { LoginModule } from 'src/app/login/login.module';
 import { NavigationPanelModule } from '../navigation-panel/navigation-panel.module';
 import { AcceuilModule } from 'src/app/acceuil/acceuil.module';
 import { EventConsultModule } from 'src/app/event-consult/event-consult.module';
+import { ChatModule } from 'src/app/chat/chat.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { EventConsultModule } from 'src/app/event-consult/event-consult.module';
     LoginModule,
     NavigationPanelModule,
     AcceuilModule,
-    EventConsultModule
+    EventConsultModule,
+    ChatModule
   ],
   exports: [
     LoginModule,
