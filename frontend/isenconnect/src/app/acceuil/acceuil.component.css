@@ -19,7 +19,9 @@ body {
     display: inline-block;
     vertical-align: middle;
     max-width: 30em;
-    max-height: 50em;
+    max-height: 30em;
+    height: 30em;
+    width: 30em;
     margin-right: 2em;
     margin-top: 2em;
     margin-bottom: 0.1em;

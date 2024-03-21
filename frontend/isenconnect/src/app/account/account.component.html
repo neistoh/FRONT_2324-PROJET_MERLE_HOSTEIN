@@ -1,0 +1,65 @@
+<div *ngIf="(user$ | async) as user" class="container">
+    <mat-form-field>
+        <mat-label class="font">Nom</mat-label>
+        <input matInput type="text" value="{{user.name}}" disabled="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label class="font">Prénom</mat-label>
+        <input matInput type="text" value="{{user.firstName}}" disabled="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label class="font">Pseudo</mat-label>
+        <input matInput type="text" value="{{user.nickname}}" disabled="true">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label class="font">Mail</mat-label>
+        <input matInput type="text" value="{{user.mail}}" disabled="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label class="font">Status</mat-label>
+        <input matInput type="text" value="{{user.status}}" disabled="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label class="font">Password</mat-label>
+        <input matInput type="password" value="xxxxxxxx" disabled="true">
+    </mat-form-field>
+
+
+    <mat-card class="avatar" id="event">
+        <h2>Avatar</h2>
+        <img class="image-avatar" src="../../assets/images/avatar/{{user.avatar}}.png" alt="Image avatar">
+    </mat-card>
+
+    <mat-card class="listEventUser">
+        <h3>Evenement créés :</h3>
+        <mat-list role="list" *ngFor="let userEvent of userEvent$ | async; let i=index">
+            <mat-list-item>
+                <span matListItemTitle>{{userEvent.name}}</span>
+            </mat-list-item>
+        </mat-list>
+    </mat-card>
+
+    <mat-card class="listFavoris" *ngIf="(favorites$|async) as events">
+        <h3>Nombres d'évenements en favoris :</h3>
+        <h4>{{events.length}}</h4>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Evenement en favoris
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <mat-list role="list" *ngFor="let favorite of events; let i=index">
+                <mat-list-item>
+                    <span matListItemTitle>{{favorite.name}}</span>
+                </mat-list-item>
+            </mat-list>
+            </div>
+            
+        </mat-expansion-panel>
+    </mat-card>
+
+
+    
+</div>

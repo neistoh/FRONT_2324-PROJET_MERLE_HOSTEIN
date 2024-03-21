@@ -14,6 +14,71 @@ export class EventService {
     private readonly router: Router
   ) { }
 
+  
+  /**
+   * Permet de récupérer les events créés par le user
+   * @param observer
+   */
+  getEventByUser(observer: Observer<EventModel[]>){
+    let searchParams = {
+      jwt: sessionStorage.getItem('jwt')?.toString()!
+    }
+    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/byUser?'
+    + new URLSearchParams(searchParams), {
+      method: 'GET',
+      headers: {
+          "Content-type": "application/json"
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      let listeEvents: EventModel[] = [];
+      data.eventData.forEach((element: EventModel) => {
+        let eventFetch: EventModel = new EventModel(element._id,element.name,element.price,element.date,
+          element.image,element.theme);
+        listeEvents.push(eventFetch);
+      });
+      console.log(listeEvents);
+      observer.next(listeEvents);
+    })
+    .catch(function(error) {
+      console.log('Request failed', error);
+      observer.next([]);
+    });
+  }
+
+  /**
+   * Permet de récupérer les events favoris par le user
+   * @param observer
+   */
+  getFavoritesByUser(observer: Observer<EventModel[]>){
+    let searchParams = {
+      jwt: sessionStorage.getItem('jwt')?.toString()!
+    }
+    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/favoritesByUser?'
+    + new URLSearchParams(searchParams), {
+      method: 'GET',
+      headers: {
+          "Content-type": "application/json"
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      let listeEvents: EventModel[] = [];
+      data.eventData.forEach((element: any) => {
+        let eventOfEelement = element.listeEvents[0];
+        let eventFetch: EventModel = new EventModel(eventOfEelement._id,eventOfEelement.name,eventOfEelement.price,eventOfEelement.date,
+          eventOfEelement.image,eventOfEelement.theme);
+        listeEvents.push(eventFetch);
+      });
+      observer.next(listeEvents);
+    })
+    .catch(function(error) {
+      console.log('Request failed', error);
+      observer.next([]);
+    });
+  }
+
 
   /**
    * Permet de récupérer la liste des event filtré
@@ -80,6 +145,11 @@ export class EventService {
   }
 
 
+  /**
+   * Permet de récupérer les utilisateur ayant un event en favoris
+   * @param observer 
+   * @param id 
+   */
   getUserFavorites(observer: Observer<UserModel[]>,id: number): any{
     fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/favorites/'+id, {
       method: 'GET',
@@ -93,7 +163,7 @@ export class EventService {
       console.log(data);
       data.eventData.forEach((user: any)=>{
         console.log(user);
-        let newUser = new UserModel(user.user,'','','',new Date(),'');
+        let newUser = new UserModel(user.user,'','','',new Date(),'','');
         userList.push(newUser);
       })
       console.log(userList);
@@ -105,6 +175,11 @@ export class EventService {
     });
   }
 
+  /**
+   * Permet de récupérer l'owner d'un event
+   * @param observer 
+   * @param eventId 
+   */
   getEventOwner(observer: Observer<boolean> ,eventId: number){
     let searchParams = {
       eventId: eventId.toString(),
@@ -127,8 +202,13 @@ export class EventService {
     });
   }
 
+  /**
+   * Permet de mettre à jour un event
+   * @param observer 
+   * @param eventId 
+   * @param body
+   */
   updateEvent(observer: Observer<EventModel>, eventId: string, body: {}){
-    console.log(eventId + body);
     fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/'+eventId
     , {
       method: 'PUT',
@@ -139,7 +219,6 @@ export class EventService {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data.eventData);
       observer.next(data.eventData[0]);
     })
     .catch(function(error) {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationPanelComponent } from './navigation-panel.component';
+import { MatSharedModule } from '../shared-module/mat-shared-module/mat-shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { NavigationPanelComponent } from './navigation-panel.component';
     NavigationPanelComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSharedModule
   ],
   exports: [
     NavigationPanelComponent
