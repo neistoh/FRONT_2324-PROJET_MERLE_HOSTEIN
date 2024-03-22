@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 RUN npm install -g @angular/cli@16.1.1
 
 # Exposer le port 4200 pour le serveur de développement Angular
-EXPOSE 10000
+EXPOSE 443
 
 # Copier le package.json et le package-lock.json pour installer les dépendances
 COPY package*.json ./
@@ -20,4 +20,4 @@ RUN npm install
 COPY . .
 
 # Commande par défaut pour démarrer l'application Angular
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "443"]
