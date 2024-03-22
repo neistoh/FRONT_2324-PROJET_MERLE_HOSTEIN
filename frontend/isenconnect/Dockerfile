@@ -20,4 +20,4 @@ RUN npm install
 COPY . .
 
 # Commande par défaut pour démarrer l'application Angular
-CMD ["node", "--max-old-space-size=4096", "node_modules/@angular/cli/bin/ng", "serve", "--host", "0.0.0.0", "--port", "10000"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "10000"]
