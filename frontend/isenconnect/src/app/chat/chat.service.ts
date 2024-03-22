@@ -4,6 +4,8 @@ import { io } from 'socket.io-client';
 import { SharedConstantes } from 'src/shared/shared-constantes.constantes';
 import { ConversationModel } from '../conversation/conversation.model';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,15 +13,24 @@ export class ChatService {
   private socket: any;
   
   constructor() {
-    this.socket = io(SharedConstantes.ADDRESS_LOCAL_HOST + ":" + SharedConstantes.PORT);
+    this.socket = io(SharedConstantes.ADDRESS_LOCAL_HOST + ":" + SharedConstantes.PORT, {
+      withCredentials: false
+    });
+
+    this.socket.on("connect", () => {
+      console.log("Connecté");
+    });
   }
 
+
   sendMessage(message: string): void {
-    this.socket.emit('postMessage', message);
+    this.socket.emit('postMessage', message, (response: any) =>{
+      console.log(response);
+    } );
   }
 
   getChatHistory(): string[] | any {
-    this.socket.emit('postMessage', {data: "someData"}, (res: any) => {
+    this.socket.emit('getChat', {data: "someData"}, (res: any) => {
       console.log(res)
       return res
     })
