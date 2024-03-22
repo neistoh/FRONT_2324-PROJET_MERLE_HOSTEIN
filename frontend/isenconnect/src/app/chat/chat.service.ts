@@ -16,12 +16,21 @@ export class ChatService {
     this.socket = io(SharedConstantes.ADDRESS_RENDER + ":" + SharedConstantes.PORT);
   }
 
+  /**
+   * Envois un message au serveur io
+   * @param message 
+   */
   sendMessage(message: string): void {
     this.socket.emit('postMessage', message, (response: any) => {
       console.log(response);
     });
   }
 
+  /**
+   * Permet de récupérer l'historique du chat
+   * @param observer 
+   * @param id 
+   */
   getChatHistory(observer: Observer<MessageModel[]>, id: number): string[] | any {
     setInterval(() => {
       console.log("ICI");
@@ -35,14 +44,10 @@ export class ChatService {
     }, 2000);
   }
 
-  receiveMessage(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('postMessage', (data: any) => {
-        observer.next(data);
-      });
-    });
-  }
-
+  /**
+   * Récupère les converstations de l'utilisateur courant
+   * @param observer 
+   */
   getConversation(observer: Observer<ConversationModel[]>) {
     console.log("Applele")
     let searchParams = {

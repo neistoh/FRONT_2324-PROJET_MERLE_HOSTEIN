@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService, private readonly route: ActivatedRoute) {
   }
 
+  //Envois un message quand la touche entrée ou que le bouton est appuyé
   sendMessage(): void {
     if (this.message.value !== '') {
       this.chatService.sendMessage(JSON.stringify({

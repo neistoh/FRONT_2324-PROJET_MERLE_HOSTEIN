@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit, OnDestroy{
   ){}
 
   ngOnInit(): void {
-
+    //Récupère toutes les informations relatives a l'utilisateur
     this.user$ = new Observable((observer: Observer<UserModel>)=>{
       this.userServicePipe.getUserData(observer);
     })

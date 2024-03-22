@@ -28,6 +28,7 @@ export class ConversationComponent implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
+    //Récupère la liste des conversations de l'utilisateur
     this.conversation$ = new Observable((observer: Observer<ConversationModel[]>)=>{
       this.chatServicePipe.getConversation(observer);
     })
@@ -35,7 +36,7 @@ export class ConversationComponent implements OnInit, OnDestroy{
     this.souscriptionMere.add(this.conversation$.subscribe());
   }
   
-
+  //Dirige l'utilisateur vers la conversation séléctionné
   gotToConvo(convoId: string){
     this.router.navigateByUrl('chat/'+convoId);
   }
