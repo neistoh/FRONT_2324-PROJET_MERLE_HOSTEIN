@@ -20,4 +20,4 @@ RUN npm install
 COPY . .
 
 # Commande par défaut pour démarrer l'application Angular
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "443"]
+CMD ["ng", "build", "--host", "0.0.0.0", "--port", "443"]
