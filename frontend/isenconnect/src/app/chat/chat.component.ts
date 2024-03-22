@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.chatService.sendMessage(JSON.stringify({
         text: this.message.value!,
         chat: this.chatId,
-        user: "test",
+        user: JSON.parse(atob(sessionStorage.getItem('jwt')!.split('.')[1]))['username'],
         sentAt: new Date()
       }))
       this.message.setValue('');
