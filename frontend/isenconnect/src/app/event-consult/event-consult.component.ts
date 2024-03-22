@@ -22,6 +22,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
 
   eventId:number = 0;
 
+  //Formulaire d'édition d'un évenement
   saveIcone = 'edit';
   nameForm = new FormControl('');
   priceForm = new FormControl('');
@@ -38,6 +39,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
   
 
   ngOnInit(): void {
+    //Récupération de l'évenement, de l'utilisateur est le owner et de la liste des favoris de l'évenement
     this.eventId = +this.route.snapshot.paramMap.get('id')!;
     this.event$ = new Observable((observer:Observer<EventModel>)=>{
       this.eventServicePipe.getEventById(observer,this.eventId);
@@ -52,6 +54,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
     this.getListFavoris();
   }
 
+  //Récupére la liste des utilisateur ayant l'event en favoris
   getListFavoris(){
     this.listUserFavoris$ = new Observable((observer:Observer<UserModel[]>)=>{
       this.eventServicePipe.getUserFavorites(observer,this.eventId);
@@ -59,7 +62,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
     this.souscriptionMere.add(this.listUserFavoris$.subscribe());
   }
 
-
+  //Passe en mode modification d'event
   modification(){
     this.isInModification = !this.isInModification;
     if(!this.isInModification){
@@ -68,7 +71,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
     this.isInModification?this.saveIcone='save':this.saveIcone='edit';
   }
 
-
+  //Modifi l'event
   updateEvent(){
     let body = {
       name: '',
@@ -87,6 +90,7 @@ export class EventConsultComponent implements OnInit, OnDestroy{
     this.souscriptionMere.add(this.event$.subscribe());
   }
 
+  //Ajoute l'event au favoris
   addToFavorites(){
     this.souscriptionMere.add(new Observable(()=>{
       this.userServicePipe.addEventToFavorites(this.eventId.toString());
