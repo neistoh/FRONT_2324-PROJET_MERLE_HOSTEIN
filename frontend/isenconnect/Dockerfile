@@ -4,7 +4,7 @@ WORKDIR /src/app
 
 COPY . /src/app
 
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@16.1.1
 
 RUN npm install
 
