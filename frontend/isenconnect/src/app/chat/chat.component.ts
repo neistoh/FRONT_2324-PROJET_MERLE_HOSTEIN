@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ChatService } from './chat.service';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { Observer } from 'rxjs/internal/types';
-import { ChatModel } from '../model/chat.model';
-import { MessageModel } from '../model/message.model';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChatService} from './chat.service';
+import {FormControl} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/internal/Observable';
+import {Observer} from 'rxjs/internal/types';
+import {MessageModel} from '../model/message.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -16,16 +15,15 @@ import { Subscription } from 'rxjs';
 export class ChatComponent implements OnInit, OnDestroy {
   message = new FormControl('');
 
-  chatId:number = 0;
-  chat$:Observable<ChatModel> = new Observable<ChatModel>;
-
+  chatId: number = 0;
   messages$: Observable<MessageModel[]> = new Observable<MessageModel[]>;
   souscriptionMere: Subscription = new Subscription();
 
-  constructor(private chatService: ChatService, private readonly route: ActivatedRoute) { }
+  constructor(private chatService: ChatService, private readonly route: ActivatedRoute) {
+  }
 
   sendMessage(): void {
-    if(this.message.value !== '') {
+    if (this.message.value !== '') {
       this.chatService.sendMessage(JSON.stringify({
         text: this.message.value!,
         chat: this.chatId,
@@ -39,9 +37,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.chatId = +this.route.snapshot.paramMap.get('id')!;
 
-    this.messages$ = new Observable((observer:Observer<MessageModel[]>)=>{
-      console.log("Souscription");
-      this.chatService.getChatHistory(observer,this.chatId);
+    this.messages$ = new Observable((observer: Observer<MessageModel[]>) => {
+      this.chatService.getChatHistory(observer, this.chatId);
     });
     this.souscriptionMere.add(this.messages$.subscribe());
   }
@@ -51,4 +48,5 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.souscriptionMere.unsubscribe();
   }
 
+  protected readonly Date = Date;
 }

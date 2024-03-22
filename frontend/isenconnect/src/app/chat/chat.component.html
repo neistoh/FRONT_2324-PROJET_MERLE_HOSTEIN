@@ -1,8 +1,14 @@
-<div *ngFor="let msg of messages$ |async; let i=index;">
-    <p>{{msg.nickname}}: {{ msg.text }}</p>
-</div>
-<mat-form-field>
+<mat-card class="chat" >
+  <div *ngFor="let msg of messages$ | async;">
+    <mat-card-content>
+      <p><b>{{ msg.nickname }}</b>: {{ msg.text }}</p>
+      <i>{{ msg.sentAt | date:'dd/MM/yyyy \'à\' HH:mm:ss' }}</i>
+      <hr>
+    </mat-card-content>
+  </div>
+  <mat-form-field>
     <mat-label>Message</mat-label>
-    <input matInput type="text" (keyup.enter)="sendMessage()" [formControl] = "message">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+    <input matInput type="text" (keyup.enter)="sendMessage()" [formControl]="message">
+    <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+  </mat-form-field>
+</mat-card>
