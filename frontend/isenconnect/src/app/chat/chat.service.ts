@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { io } from 'socket.io-client';
+import { ChatModel } from '../model/chat.model';
 import { SharedConstantes } from 'src/shared/shared-constantes.constantes';
 import { ConversationModel } from '../conversation/conversation.model';
-
-
+import { MessageModel } from '../model/message.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private socket: any;
-  
+
   constructor() {
-    this.socket = io(SharedConstantes.ADDRESS_LOCAL_HOST + ":" + SharedConstantes.PORT, {
-      withCredentials: false
-    });
-
-    this.socket.on("connect", () => {
-      console.log("Connecté");
-    });
+    this.socket = io(SharedConstantes.ADDRESS_RENDER + ":" + SharedConstantes.PORT);
   }
-
 
   sendMessage(message: string): void {
     this.socket.emit('postMessage', message, (response: any) =>{
@@ -29,10 +22,10 @@ export class ChatService {
     } );
   }
 
-  getChatHistory(): string[] | any {
-    this.socket.emit('getChat', {data: "someData"}, (res: any) => {
-      console.log(res)
-      return res
+  getChatHistory(observer: Observer<MessageModel[]>,id: number): string[] | any {
+    this.socket.emit('getChat', id, (response: any) => {
+      console.log(response)
+      return response
     })
   }
 
@@ -49,7 +42,7 @@ export class ChatService {
     let searchParams = {
       jwt: sessionStorage.getItem('jwt')?.toString()!
     }
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/chat?'
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/chat?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {

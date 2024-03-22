@@ -13,8 +13,8 @@ export class LoginService {
 
   connect(pseudo: string | null, password: string | null, route: string){
     let jwtSign;
-    sessionStorage.getItem('jwt')? jwtSign=sessionStorage.getItem('jwt') : jwtSign=''; 
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user/connect', {
+    sessionStorage.getItem('jwt')? jwtSign=sessionStorage.getItem('jwt') : jwtSign='';
+    fetch(SharedConstantes.ADDRESS_RENDER+'/user/connect', {
       method: 'POST',
       headers: {
           "Content-type": "application/json"
@@ -25,7 +25,7 @@ export class LoginService {
         jwt: jwtSign
       })
     })
-    .then(response => { 
+    .then(response => {
       if(response.status===401){
         this.router.navigateByUrl('');
       }else if(response.status === 404){

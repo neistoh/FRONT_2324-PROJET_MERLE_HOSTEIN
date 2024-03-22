@@ -16,7 +16,7 @@ export class UserService {
     let searchParams = {
       jwt: sessionStorage.getItem('jwt')?.toString()!
     }
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user?'
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {
@@ -43,7 +43,7 @@ export class UserService {
       eventId: eventId
     }
 
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user/addFavorites/', {
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user/addFavorites/', {
       method: 'POST',
       headers: {
           "Content-type": "application/json"
@@ -62,7 +62,7 @@ export class UserService {
 
   addUser(body: any){
 
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/user/addUser/', {
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user/addUser/', {
       method: 'POST',
       headers: {
           "Content-type": "application/json"

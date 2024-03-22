@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
+import { Observer } from 'rxjs/internal/types';
+import { ChatModel } from '../model/chat.model';
+import { MessageModel } from '../model/message.model';
 
 @Component({
   selector: 'app-chat',
@@ -9,10 +14,13 @@ import { FormControl } from '@angular/forms';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   message = new FormControl('');
-  
-  messages: string[] = [];
 
-  constructor(private chatService: ChatService) { }
+  chatId:number = 0;
+  chat$:Observable<ChatModel> = new Observable<ChatModel>;
+
+  messages$: Observable<MessageModel[]> = new Observable<MessageModel[]>;
+
+  constructor(private chatService: ChatService, private readonly route: ActivatedRoute) { }
 
   sendMessage(): void {
     if(this.message.value !== '') {
@@ -27,12 +35,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.chatService.getChatHistory().subscribe((data: string[]) => {
-      this.messages = data;
-    });
+    this.chatId = +this.route.snapshot.paramMap.get('id')!;
 
-    this.chatService.receiveMessage().subscribe(data => {
-      this.messages.push(data);
+    this.messages$ = new Observable((observer:Observer<MessageModel[]>)=>{
+      this.chatService.getChatHistory(observer,this.chatId);
     });
 
     this.chatService.sendMessage(JSON.stringify({

@@ -14,7 +14,7 @@ export class EventService {
     private readonly router: Router
   ) { }
 
-  
+
   /**
    * Permet de récupérer les events créés par le user
    * @param observer
@@ -23,7 +23,7 @@ export class EventService {
     let searchParams = {
       jwt: sessionStorage.getItem('jwt')?.toString()!
     }
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/byUser?'
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/byUser?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {
@@ -55,7 +55,7 @@ export class EventService {
     let searchParams = {
       jwt: sessionStorage.getItem('jwt')?.toString()!
     }
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/favoritesByUser?'
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/favoritesByUser?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {
@@ -99,7 +99,7 @@ export class EventService {
     filtre.ordre?searchParams.ordre=filtre.ordre:'';
     filtre.tri?searchParams.tri=filtre.tri:'';
 
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/filtre?' 
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/filtre?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {
@@ -124,11 +124,11 @@ export class EventService {
 
   /**
    * Permet de récupérer un event grace à son _id
-   * @param observer 
-   * @param id 
+   * @param observer
+   * @param id
    */
   getEventById(observer: Observer<EventModel>,id: number): any{
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/'+id, {
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/'+id, {
       method: 'GET',
       headers: {
           "Content-type": "application/json"
@@ -147,11 +147,11 @@ export class EventService {
 
   /**
    * Permet de récupérer les utilisateur ayant un event en favoris
-   * @param observer 
-   * @param id 
+   * @param observer
+   * @param id
    */
   getUserFavorites(observer: Observer<UserModel[]>,id: number): any{
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/favorites/'+id, {
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/favorites/'+id, {
       method: 'GET',
       headers: {
           "Content-type": "application/json"
@@ -177,15 +177,15 @@ export class EventService {
 
   /**
    * Permet de récupérer l'owner d'un event
-   * @param observer 
-   * @param eventId 
+   * @param observer
+   * @param eventId
    */
   getEventOwner(observer: Observer<boolean> ,eventId: number){
     let searchParams = {
       eventId: eventId.toString(),
       jwt: sessionStorage.getItem('jwt')?.toString()!
     }
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/ownership?'
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/ownership?'
     + new URLSearchParams(searchParams), {
       method: 'GET',
       headers: {
@@ -204,12 +204,12 @@ export class EventService {
 
   /**
    * Permet de mettre à jour un event
-   * @param observer 
-   * @param eventId 
+   * @param observer
+   * @param eventId
    * @param body
    */
   updateEvent(observer: Observer<EventModel>, eventId: string, body: {}){
-    fetch(SharedConstantes.ADDRESS_LOCAL_HOST+':'+SharedConstantes.PORT+'/event/'+eventId
+    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/event/'+eventId
     , {
       method: 'PUT',
       headers: {

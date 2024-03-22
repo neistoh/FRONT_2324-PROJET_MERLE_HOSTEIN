@@ -1,4 +1,4 @@
-<div *ngFor="let msg of messages">
+<div *ngFor="let msg of messages$ |async; let i=index;">
     {{ msg }}
 </div>
 <mat-form-field>
