@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { LoginService } from './login.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { UserService } from '../user/user.service';
 
 @Component({
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   isRegistering = false;
 
+  userExist$ = new Observable<boolean>;
   souscriptionMere: Subscription = new Subscription();
 
   constructor(
@@ -42,21 +43,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   addUser(){
-    const body = {
-      name:this.nameForm.value,
-      firstname:this.firstnameForm.value,
-      nickname:this.pseudo.value,
-      mail:this.mailForm.value,
-      birthdate:this.birthdateForm.value,
-      avatar:this.avatarForm.value,
-      password:this.password.value
-    }
-
-    this.souscriptionMere.add(
-      new Observable(()=>{
-        this.userServicePipe.addUser(body);
-      }).subscribe()
-    )
+      const body = {
+        name:this.nameForm.value,
+        firstname:this.firstnameForm.value,
+        nickname:this.pseudo.value,
+        mail:this.mailForm.value,
+        birthdate:this.birthdateForm.value,
+        avatar:this.avatarForm.value,
+        password:this.password.value
+      }
+  
+      this.souscriptionMere.add(
+        new Observable(()=>{
+          this.userServicePipe.addUser(body);
+        }).subscribe()
+      )
   }
 
   ngOnDestroy(): void {

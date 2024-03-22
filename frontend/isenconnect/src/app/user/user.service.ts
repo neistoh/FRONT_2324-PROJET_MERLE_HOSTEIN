@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observer } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { SharedConstantes } from 'src/shared/shared-constantes.constantes';
 import { UserModel } from '../model/user.model';
 
@@ -61,20 +61,47 @@ export class UserService {
 
 
   addUser(body: any){
+    this.doesUserExist(body.nickname).then(result=>{
+      console.log(result);
+      if(!result){
+        fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user/addUser/', {
+          method: 'POST',
+          headers: {
+              "Content-type": "application/json"
+          },
+          body: JSON.stringify(body)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.eventData);
+        })
+        .catch(function(error) {
+          console.log('Request failed', error);
+        });
+      }
+    });   
+  }
 
-    fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user/addUser/', {
-      method: 'POST',
+  doesUserExist(nickname: string): Promise<boolean>{
+    const searchParams = {
+      nickname: nickname
+    }
+
+    return fetch(SharedConstantes.ADDRESS_RENDER+':'+SharedConstantes.PORT+'/user/?'
+    + new URLSearchParams(searchParams), {
+      method: 'GET',
       headers: {
           "Content-type": "application/json"
-      },
-      body: JSON.stringify(body)
+      }
     })
     .then(response => response.json())
     .then(data => {
       console.log(data.eventData);
+      return data.eventData.length > 0;
     })
     .catch(function(error) {
       console.log('Request failed', error);
+      return true;
     });
   }
 
