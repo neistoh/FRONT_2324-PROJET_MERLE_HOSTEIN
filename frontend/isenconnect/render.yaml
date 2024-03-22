@@ -1,0 +1,6 @@
+services:
+  - name: isenconnect
+    type: static
+    envVars:
+      - key: RENDER_STATIC_DIR
+        value: dist
