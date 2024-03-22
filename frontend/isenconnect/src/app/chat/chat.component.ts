@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Observer } from 'rxjs/internal/types';
 import { ChatModel } from '../model/chat.model';
 import { MessageModel } from '../model/message.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +20,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   chat$:Observable<ChatModel> = new Observable<ChatModel>;
 
   messages$: Observable<MessageModel[]> = new Observable<MessageModel[]>;
+  souscriptionMere: Subscription = new Subscription();
 
   constructor(private chatService: ChatService, private readonly route: ActivatedRoute) { }
 
@@ -26,7 +28,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if(this.message.value !== '') {
       this.chatService.sendMessage(JSON.stringify({
         text: this.message.value!,
-        chat: "1",
+        chat: this.chatId,
         user: "test",
         sentAt: new Date()
       }))
@@ -38,19 +40,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatId = +this.route.snapshot.paramMap.get('id')!;
 
     this.messages$ = new Observable((observer:Observer<MessageModel[]>)=>{
+      console.log("Souscription");
       this.chatService.getChatHistory(observer,this.chatId);
     });
-
-    this.chatService.sendMessage(JSON.stringify({
-      text: "Test",
-      chat: "1",
-      user: "test",
-      sentAt: new Date()
-    }))
+    this.souscriptionMere.add(this.messages$.subscribe());
   }
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    console.log("Destroy");
+    this.souscriptionMere.unsubscribe();
   }
 
 }

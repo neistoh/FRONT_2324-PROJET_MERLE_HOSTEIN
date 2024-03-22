@@ -23,10 +23,16 @@ export class ChatService {
   }
 
   getChatHistory(observer: Observer<MessageModel[]>,id: number): string[] | any {
-    this.socket.emit('getChat', id, (response: any) => {
-      console.log(response)
-      return response
-    })
+    setInterval(()=>{
+      console.log("ICI");
+      this.socket.emit('getChat', id, (response: any) => {
+        let listMessages: MessageModel[] = [];
+        response.forEach((message:any)=>{
+          listMessages.push(new MessageModel(message._id,message.text,message.chat,message.user,message.sentAt))
+        })
+        observer.next(listMessages);
+      })
+    },2000);
   }
 
   receiveMessage(): Observable<any> {

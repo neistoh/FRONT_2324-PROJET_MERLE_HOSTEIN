@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserModel } from '../model/user.model';
 import { EventService } from '../event/event.service';
-import { Router } from '@angular/router';
+import { Router, RouteReuseStrategy } from '@angular/router';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { ConversationModel } from './conversation.model';
 import { ChatService } from '../chat/chat.service';
@@ -37,7 +37,7 @@ export class ConversationComponent implements OnInit, OnDestroy{
   
 
   gotToConvo(convoId: string){
-    
+    this.router.navigateByUrl('chat/'+convoId);
   }
   
   ngOnDestroy(): void {

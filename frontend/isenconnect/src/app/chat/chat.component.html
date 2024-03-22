@@ -1,5 +1,5 @@
 <div *ngFor="let msg of messages$ |async; let i=index;">
-    {{ msg }}
+    <p>{{msg.nickname}}: {{ msg.text }}</p>
 </div>
 <mat-form-field>
     <mat-label>Message</mat-label>
