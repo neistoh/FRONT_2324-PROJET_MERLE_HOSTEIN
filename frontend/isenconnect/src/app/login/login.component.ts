@@ -11,6 +11,7 @@ import { UserService } from '../user/user.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  //Forumaire de connection et inscription
   pseudo = new FormControl('');
   password = new FormControl('');
   nameForm = new FormControl('');
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   birthdateForm = new FormControl('');
   avatarForm = new FormControl('');
 
+  //Si l'utilisateur est en mode enregistrement ou connection
   isRegistering = false;
 
   userExist$ = new Observable<boolean>;
@@ -33,11 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginServicePipe.connect('','','acceuil');
   }
 
+  //Est-ce que l'utilisateur à le droit de ce connecter
   isUserAllowed(): void{
     console.log('On passe dans isUserAllowed');
     this.loginServicePipe.connect(this.pseudo.value,this.password.value,'acceuil');
   }
 
+  //Change l'état de isRegistering
   register(){
     this.isRegistering = !this.isRegistering;
   }

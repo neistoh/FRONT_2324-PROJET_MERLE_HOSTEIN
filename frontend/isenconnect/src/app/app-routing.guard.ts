@@ -14,7 +14,8 @@ export class appRoutingGuard{
   ){}
 
   canActivate (route: ActivatedRouteSnapshot,state: RouterStateSnapshot){
-
+    //Si l'utilisateur n'a pas de jwt alors on le renvois a la page de login sinon on 
+    //regarde qi il a le droit de ce connecter
     if(!sessionStorage.getItem('jwt')){
       console.log("Pas de jwt");
       this.router.navigateByUrl('');

@@ -11,6 +11,13 @@ export class LoginService {
     private readonly router: Router
   ) { }
 
+  /**
+   * Permet de savoir si l'utilisateur à le droit de ce connecter en fonction de son pseudo et de son mot de passe
+   * ou en fonction de son jwt (il c'est déjà connécté une fois)
+   * @param pseudo 
+   * @param password 
+   * @param route 
+   */
   connect(pseudo: string | null, password: string | null, route: string){
     let jwtSign;
     sessionStorage.getItem('jwt')? jwtSign=sessionStorage.getItem('jwt') : jwtSign='';
@@ -33,6 +40,9 @@ export class LoginService {
       }
       return response.json()})
     .then(data => {
+      //Si l'utilisateur à un jwt et à le droit de ce connecter et route l'utilisateur
+      //Sinon si aucun jwt existe on le créer et route l'utilisateur
+      //Sinon l'utilisateur n'a pas le droit ce connecter
       if(data['jwt'] === sessionStorage.getItem('jwt') && data['droits'] === 'W'){
         sessionStorage.setItem('nickname',data['nickname'])
         this.router.navigateByUrl(route);

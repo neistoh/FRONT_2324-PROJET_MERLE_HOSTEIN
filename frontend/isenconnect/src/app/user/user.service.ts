@@ -11,7 +11,10 @@ export class UserService {
   constructor() { }
 
 
-  //TODO connection au back pour récupérer le data du user
+  /**
+   * Permet de récupérer les data de l'utilisateur actuel
+   * @param observer 
+   */
   getUserData(observer: Observer<UserModel>){
     let searchParams = {
       jwt: sessionStorage.getItem('jwt')?.toString()!
@@ -37,6 +40,10 @@ export class UserService {
     });
   }
 
+  /**
+   * Permet d'ajouter un event au favoris de l'utilisateur
+   * @param eventId 
+   */
   addEventToFavorites(eventId:string){
     const body = {
       jwt: sessionStorage.getItem('jwt'),
@@ -60,6 +67,10 @@ export class UserService {
   }
 
 
+  /**
+   * Permet d'ajouter un utilisateur si il n'existe pas d'utilisateur avec le même nickname
+   * @param body 
+   */
   addUser(body: any){
     this.doesUserExist(body.nickname).then(result=>{
       console.log(result);
@@ -82,6 +93,11 @@ export class UserService {
     });   
   }
 
+  /**
+   * Permet de récupérer si un utilisateur existe avec un nickname
+   * @param nickname 
+   * @returns 
+   */
   doesUserExist(nickname: string): Promise<boolean>{
     const searchParams = {
       nickname: nickname
