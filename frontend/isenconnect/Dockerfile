@@ -1,11 +1,23 @@
-FROM node:alpine
+# Utiliser une image de node.js version 16
+FROM node:16
 
-WORKDIR /src/app
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /usr/src/app
 
-COPY . /src/app
-
+# Installer Angular CLI globalement
 RUN npm install -g @angular/cli@16.1.1
 
+# Exposer le port 4200 pour le serveur de développement Angular
+EXPOSE 10000
+
+# Copier le package.json et le package-lock.json pour installer les dépendances
+COPY package*.json ./
+
+# Installer les dépendances
 RUN npm install
 
-CMD ["node", "--max-old-space-size=4096", "node_modules/@angular/cli/bin/ng", "serve", "--port", "10000"]
+# Copier tous les fichiers de l'application dans le conteneur
+COPY . .
+
+# Commande par défaut pour démarrer l'application Angular
+CMD ["node", "--max-old-space-size=4096", "node_modules/@angular/cli/bin/ng", "serve", "--host", "0.0.0.0", "--port", "10000"]

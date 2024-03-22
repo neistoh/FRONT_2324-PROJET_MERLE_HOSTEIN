@@ -17,7 +17,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
   souscriptionMere: Subscription = new Subscription();
   event$: Observable<EventModel[]> = new Observable<EventModel[]>;
 
-
+  //Formulaire de la recherche par tri et filtre
   nameForm = new FormControl('');
   optionThemeForm = new FormControl('');
   prixForm = new FormControl('');
@@ -38,6 +38,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
+    //Permet d'aller récupérer les évenements avec un filtre vide
     const filtre = {}
     this.event$ = new Observable((observer:Observer<EventModel[]>)=>{
       this.eventServicePipe.getEventByFiltre(observer,filtre);
@@ -48,6 +49,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     })).subscribe());
     
 
+    //Subscribe au changement de valeur du tri de la date et du prix
     this.souscriptionMere.add(this.triDateForm.valueChanges.pipe(tap(value=>{
       let ordre = this.triDateForm.value?1:-1;
       this.filtreWithTri("date", ordre.toString());
@@ -59,7 +61,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     })).subscribe());
   }
 
-
+  //Permet de filtrer les évenements et d'aller chercher le résultat
   filtre(){
     let price = 0;
     if(this.greaterLesserForm.value && this.prixForm.value){
@@ -79,6 +81,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     })
   }
 
+  //Permet de trier les évenements et d'aller chercher le résultat
   filtreWithTri(tri: string,ordre: string){
     let price = 0;
     if(this.greaterLesserForm.value && this.prixForm.value){
@@ -98,6 +101,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     })
   }
 
+  //Reset les filtres
   resetFiltre(){
     const filtre = {
       theme: '',
@@ -114,6 +118,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     this.greaterLesserForm.setValue('');
   }
 
+  //Permet de scroller à droite la liste des évenements
   scrollEventRight(){
     let container = document.getElementById("scrollContainer");
     let distance = document.getElementById("event")?.clientWidth.valueOf();
@@ -123,7 +128,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  //Permet de scroller à droite la liste des évenements
   scrollEventLeft(){
     let container = document.getElementById("scrollContainer");
     let distance = document.getElementById("event")?.clientWidth.valueOf();
@@ -133,7 +138,7 @@ export class AcceuilComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  //Permet d'aller à la page des détails d'un évenement
   checkDetailEvent(id:number){
     this.router.navigateByUrl('eventConsult/'+id);
   }
